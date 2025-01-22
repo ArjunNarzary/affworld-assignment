@@ -1,14 +1,10 @@
-import express, { Express, Request, Response } from "express"
-import dotenv from "dotenv"
+import "dotenv/config"
+import app from "./app"
+import { connectDatabase } from "./config/database"
 
-dotenv.config
-
-const app = express()
 const port = process.env.PORT || 8000
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Express + Typescript Server")
-})
+connectDatabase()
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`)
