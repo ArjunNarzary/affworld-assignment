@@ -7,6 +7,7 @@ import {
 } from "@radix-ui/react-dropdown-menu"
 import { ReactNode } from "react"
 import { useNavigate } from "react-router"
+import Navbar from "./Navbar"
 
 const LayoutComponent = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate()
@@ -16,8 +17,9 @@ const LayoutComponent = ({ children }: { children: ReactNode }) => {
   return (
     <main className="flex flex-col min-h-screen w-full container mx-auto">
       <header className="flex flex-row justify-between items-center py-10">
-        <div>
+        <div className="flex justify-start items-center gap-4">
           <h1 className="text-3xl font-extrabold">Task Management Tool</h1>
+          <Navbar />
         </div>
         <div className="flex flex-row gap-x-3 justify-end items-center">
           <DropdownMenu>
@@ -31,7 +33,7 @@ const LayoutComponent = ({ children }: { children: ReactNode }) => {
       <main className="flex-1">{children}</main>
 
       <footer className="flex justify-center py-4">
-        All right reserver &copy; 2024
+        All right reserve &copy; 2024
       </footer>
     </main>
   )
