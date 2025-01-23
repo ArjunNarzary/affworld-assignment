@@ -1,7 +1,17 @@
 import express, { Router } from "express"
-import { loginUser, registerUser } from "../controllers"
+import {
+  forgotPassword,
+  loginUser,
+  registerUser,
+  resetPassword,
+} from "../controllers"
 import { validateData } from "../middlewares"
-import { userLoginSchema, userRegistrationSchema } from "../schemas"
+import {
+  forgotPasswordSchema,
+  resetPasswordSchema,
+  userLoginSchema,
+  userRegistrationSchema,
+} from "../schemas"
 
 const router: Router = express.Router()
 
@@ -10,5 +20,11 @@ router
   .post(validateData(userRegistrationSchema), registerUser)
 
 router.route("/login").post(validateData(userLoginSchema), loginUser)
+router
+  .route("/forgot-password")
+  .post(validateData(forgotPasswordSchema), forgotPassword)
+router
+  .route("/reset-password")
+  .post(validateData(resetPasswordSchema), resetPassword)
 
 export default router
