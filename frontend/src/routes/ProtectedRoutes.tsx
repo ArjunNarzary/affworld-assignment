@@ -1,7 +1,7 @@
 import { LayoutComponent } from "@/components"
 import { Navigate, Outlet } from "react-router"
 
-type TProtectedRouteProps = {
+interface IProtectedRouteProps {
   isAuthenticated: boolean
   redirectTo: string
 }
@@ -9,7 +9,7 @@ type TProtectedRouteProps = {
 const ProtectedRoutes = ({
   isAuthenticated,
   redirectTo,
-}: TProtectedRouteProps) => {
+}: IProtectedRouteProps) => {
   if (isAuthenticated) {
     return (
       <LayoutComponent>

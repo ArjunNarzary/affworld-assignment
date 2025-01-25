@@ -6,12 +6,12 @@ import {
 } from "@/containers"
 import { AppPath } from "./RouteName"
 
-export type TRouteConfig = {
+export interface IRouteConfig {
   path: string
   component: () => JSX.Element
 }
 
-const PrivateRoutes: TRouteConfig[] = [
+const PrivateRoutes: IRouteConfig[] = [
   {
     path: AppPath.tasks,
     component: TaskContainer,
@@ -22,7 +22,7 @@ const PrivateRoutes: TRouteConfig[] = [
   },
 ]
 
-const PublicRoutes: TRouteConfig[] = [
+const PublicRoutes: IRouteConfig[] = [
   {
     path: AppPath.login,
     component: LoginContainer,

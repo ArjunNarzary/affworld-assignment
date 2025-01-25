@@ -1,11 +1,20 @@
-import { Route, Routes } from "react-router"
+import { Navigate, Route, Routes, useLocation } from "react-router"
 import "./App.css"
-import { PublicRoutes, TRouteConfig } from "./routes/RouteConfig"
+import { PublicRoutes, IRouteConfig } from "./routes/RouteConfig"
 import { AppPath, PrivateRoutes, ProtectedRoutes } from "./routes"
+import { useSelector } from "react-redux"
+import { selectUser } from "./services/auth/authSlice"
 
 function App() {
-  const renderRoutes = (routes: TRouteConfig[]) => {
-    return routes.map((route: TRouteConfig) => {
+  const location = useLocation()
+  const isAuthenticated = useSelector(selectUser) !== null
+
+  const isPublicRoute = (pathname: string) => {
+    return PublicRoutes.some((route) => pathname.startsWith(route.path))
+  }
+
+  const renderRoutes = (routes: IRouteConfig[]) => {
+    return routes.map((route: IRouteConfig) => {
       const { path, component: Component } = route
       return <Route key={path} path={path} element={<Component />} />
     })
@@ -13,19 +22,23 @@ function App() {
   return (
     <>
       <Routes>
-        <>
-          <Route
-            element={
-              <ProtectedRoutes
-                isAuthenticated={true}
-                redirectTo={AppPath.login}
-              />
-            }
-          >
-            {renderRoutes(PrivateRoutes)}
-          </Route>
-          {renderRoutes(PublicRoutes)}
-        </>
+        {isAuthenticated && isPublicRoute(location.pathname) ? (
+          <Route path="*" element={<Navigate to={AppPath.tasks} replace />} />
+        ) : (
+          <>
+            <Route
+              element={
+                <ProtectedRoutes
+                  isAuthenticated={isAuthenticated}
+                  redirectTo={AppPath.login}
+                />
+              }
+            >
+              {renderRoutes(PrivateRoutes)}
+            </Route>
+            {renderRoutes(PublicRoutes)}
+          </>
+        )}
       </Routes>
     </>
   )
