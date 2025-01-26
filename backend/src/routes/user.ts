@@ -18,7 +18,9 @@ import {
 } from "../schemas"
 
 const router: Router = express.Router()
-
+router.route("/").get((req, res) => {
+  res.send("User route")
+})
 router
   .route("/register")
   .post(validateData(userRegistrationSchema), registerUser)
