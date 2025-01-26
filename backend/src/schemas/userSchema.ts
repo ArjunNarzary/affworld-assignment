@@ -4,7 +4,7 @@ export const userRegistrationSchema = z.object({
   name: z.string().min(1, "Please provide your name"),
   email: z.string().email("Please provide valid email"),
   password: z.string().min(8, "Password must be atleast 8 characters"),
-  socialLogin: z.boolean().nullable(),
+  socialLogin: z.boolean().optional(),
 })
 
 export const userLoginSchema = z.object({
