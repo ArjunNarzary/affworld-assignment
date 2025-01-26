@@ -7,10 +7,8 @@ import { APIError } from "@/interfaces"
 import { isEmail } from "@/lib/utils"
 import { useForgetPasswordMutation } from "@/services"
 import { useState } from "react"
-import { useNavigate } from "react-router"
 
 const ForgotPasswordContainer = () => {
-  const navigate = useNavigate()
   const [handleForgetPassword, { isLoading }] = useForgetPasswordMutation()
   const [email, setEmail] = useState("")
   const [error, setError] = useState("")
