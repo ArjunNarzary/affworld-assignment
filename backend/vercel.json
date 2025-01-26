@@ -2,15 +2,19 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/index.js",
-      "use": "@vercel/node",
-      "config": { "includeFiles": ["dist/**"] }
+      "src": "src/index.ts",
+      "use": "@vercel/node"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "dist/index.js"
+      "source": "/api/(.*)",
+      "destination": "/src/index.ts"
+    },
+    {
+      "source": "/upload/(.*)",
+      "destination": "/public/upload/$1"
     }
-  ]
+  ],
+  "public": "public"
 }
