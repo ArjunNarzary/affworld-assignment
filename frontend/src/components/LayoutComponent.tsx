@@ -11,15 +11,13 @@ import Navbar from "./Navbar"
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectUser } from "@/services/auth/authSlice"
 import { useLogoutUserMutation } from "@/services"
+import { getFirstTwoChars } from "@/lib/utils"
 
 const LayoutComponent = ({ children }: { children: ReactNode }) => {
   const user = useSelector(selectUser)
   const dispatch = useDispatch()
   const [logoutUser] = useLogoutUserMutation()
   const navigate = useNavigate()
-  const avatarName = user?.name
-    ? (user?.name[0] + user?.name[1]).toUpperCase()
-    : "0"
 
   const handleLogout = async () => {
     await logoutUser()
@@ -39,7 +37,7 @@ const LayoutComponent = ({ children }: { children: ReactNode }) => {
             <DropdownMenuTrigger asChild>
               <div className="bg-redPurple h-10 w-10 rounded-full flex justify-center items-center">
                 <span className="text-lightGrey font-semibold">
-                  {avatarName}
+                  {getFirstTwoChars(user?.name)}
                 </span>
               </div>
             </DropdownMenuTrigger>

@@ -10,6 +10,6 @@ export const API_ENDPOINTS = {
     deleteUpdateTask: (id: string) => `/task/${id}`,
   },
   feed: {
-    getAdd: "/feed",
+    addGetFeed: "/feed",
   },
 }

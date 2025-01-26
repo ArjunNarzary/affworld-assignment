@@ -77,7 +77,7 @@ export const updateTask = async (req: Request, res: Response) => {
     }
 
     if (task.user?._id.toString() !== _id.toString()) {
-      res.status(401).json({
+      res.status(400).json({
         success: false,
         message: "You are not allowed to update this task.",
       })
@@ -127,7 +127,7 @@ export const deleteTask = async (req: Request, res: Response) => {
     }
 
     if (task.user?._id.toString() !== _id.toString()) {
-      res.status(401).json({
+      res.status(400).json({
         success: false,
         message: "You are not allowed to update this task.",
       })

@@ -1,22 +1,12 @@
 import jwt from "jsonwebtoken"
 import { Request, Response } from "express"
 import { ERROR_MESSAGE } from "../libs"
-import { findUserById, getAllFeedsByDate, insertFeed } from "../services"
+import { findUserById, getAllFeedsData, insertFeed } from "../services"
 import { uploadOnCloudinary } from "../config/cloudinary"
 
 export const getAllFeeds = async (req: Request, res: Response) => {
   try {
-    let currentDate = new Date()
-    let { limit, skip, date } = req.query
-    if (date) {
-      currentDate = new Date(date as string)
-    }
-
-    const feeds = await getAllFeedsByDate({
-      skip: Number(skip),
-      limit: Number(limit),
-      date: currentDate,
-    })
+    const feeds = await getAllFeedsData()
 
     res.status(200).json({
       success: true,

@@ -19,7 +19,7 @@ export const isAuthenticatedUser = async (
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string)
     const user = await findUserById((<any>decoded)._id)
     if (!user) {
-      res.setMaxListeners(401).json({
+      res.status(401).json({
         success: false,
         message: "Unauthorized user",
       })

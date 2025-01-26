@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "./ui/textarea"
+import { Textarea } from "../components/ui/textarea"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { useAddTaskMutation } from "@/services"

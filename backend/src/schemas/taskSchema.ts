@@ -8,5 +8,5 @@ export const createTaskSchema = z.object({
 export const updateTaskSchema = z.object({
   name: z.string(),
   description: z.string().optional(),
-  status: z.enum(["TODO", "INPROGRESS", "COMPLETE"]),
+  status: z.enum(["TODO", "INPROGRESS", "DONE"]),
 })

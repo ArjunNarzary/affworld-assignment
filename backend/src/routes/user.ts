@@ -2,10 +2,12 @@ import express, { Router } from "express"
 import {
   forgotPassword,
   loginUser,
+  logoutUser,
+  refreshToken,
   registerUser,
   resetPassword,
 } from "../controllers"
-import { validateData } from "../middlewares"
+import { isAuthenticatedUser, validateData } from "../middlewares"
 import {
   forgotPasswordSchema,
   resetPasswordSchema,
@@ -26,5 +28,7 @@ router
 router
   .route("/reset-password")
   .post(validateData(resetPasswordSchema), resetPassword)
+router.route("/refresh-token").get(isAuthenticatedUser, refreshToken)
+router.route("/logout").put(logoutUser)
 
 export default router

@@ -7,7 +7,7 @@ const taskSchema = new Schema(
     description: String,
     status: {
       type: String,
-      enum: ["TODO", "INPROGRESS", "COMPLETE"],
+      enum: ["TODO", "INPROGRESS", "DONE"],
       default: "TODO",
     },
     user: {

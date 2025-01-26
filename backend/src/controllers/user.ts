@@ -62,7 +62,7 @@ export const registerUser = async (req: Request, res: Response) => {
       res.status(201).cookie("token", token, getCookieOptions).json({
         success: true,
         message: "Registration successful",
-        data: createUser,
+        user: createUser,
         token: token,
       })
     } else {
@@ -100,7 +100,7 @@ export const loginUser = async (req: Request, res: Response) => {
     res.status(201).cookie("token", token, getCookieOptions).json({
       success: true,
       message: "Login successful",
-      data: user,
+      user: user,
       token: token,
     })
   } catch (error) {
@@ -184,6 +184,35 @@ export const resetPassword = async (req: Request, res: Response) => {
     })
   } catch (error) {
     console.log(error)
+    res.status(500).json(ERROR_MESSAGE)
+  }
+}
+
+export const logoutUser = async (req: Request, res: Response) => {
+  try {
+    res.status(200).clearCookie("token").json({
+      success: true,
+      message: "Logout successful",
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(ERROR_MESSAGE)
+  }
+}
+
+export const refreshToken = async (req: Request, res: Response) => {
+  try {
+    const { authUser } = req.body
+
+    //create new session cookies
+    const token = generateToken(authUser, "15m")
+    res.status(201).cookie("token", token, getCookieOptions).json({
+      success: true,
+      message: "Registration successful",
+      user: authUser,
+      token: token,
+    })
+  } catch (error) {
     res.status(500).json(ERROR_MESSAGE)
   }
 }

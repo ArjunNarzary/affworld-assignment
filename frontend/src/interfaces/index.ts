@@ -72,3 +72,30 @@ export interface IColumnType {
   title: string
   status: ITaskStatus
 }
+
+//Feeds
+
+export interface IFeed {
+  _id: string
+  caption: string
+  imgUrl: string
+  user: {
+    name: string
+  }
+  createdAt: string
+}
+
+export interface ICreateFeedPayload {
+  caption: string
+  image: File
+}
+
+export interface IGetFeedsPayload {
+  skip: number
+  limit: number
+  date: Date | string | undefined
+}
+
+export interface IFeedsResponse extends IDefaultResponse {
+  feeds: IFeed[]
+}

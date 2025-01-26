@@ -11,6 +11,8 @@ import {
   useDeleteTaskMutation,
 } from "./task/taskService"
 
+import { useCreateFeedMutation, useGetAllFeedsQuery } from "./feed/feedService"
+
 export {
   useRegisterUserMutation,
   useLogoutUserMutation,
@@ -19,4 +21,6 @@ export {
   useGetAllTaskQuery,
   useUpdateTaskMutation,
   useDeleteTaskMutation,
+  useCreateFeedMutation,
+  useGetAllFeedsQuery,
 }
