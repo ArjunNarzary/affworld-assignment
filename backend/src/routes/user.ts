@@ -20,7 +20,6 @@ import { connectDatabase } from "../config/database"
 
 const router: Router = express.Router()
 router.route("/").get((req, res) => {
-  connectDatabase()
   res.send("User route")
 })
 router
