@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose"
 import { User } from "../models"
 import { userRegistrationSchema } from "../schemas"
 import { z } from "zod"
@@ -22,6 +23,7 @@ export const findUserById = (
   _id: string
   email: string
   name: string
+  socialLogin: boolean
   createdAt: Date
   updatedAt: string
 } | null> => {

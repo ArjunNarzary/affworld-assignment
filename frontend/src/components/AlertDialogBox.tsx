@@ -16,6 +16,7 @@ interface IAlertDialogBoxProps {
   onCancel: () => void
   title: string
   description?: string
+  showCancel?: boolean
 }
 
 const AlertDialogBox = ({
@@ -24,6 +25,7 @@ const AlertDialogBox = ({
   onConfirm,
   title,
   description,
+  showCancel = true,
 }: IAlertDialogBoxProps) => {
   return (
     <AlertDialog open={open} onOpenChange={onCancel}>
@@ -35,7 +37,7 @@ const AlertDialogBox = ({
           )}
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          {showCancel && <AlertDialogCancel>Cancel</AlertDialogCancel>}
           <AlertDialogAction onClick={onConfirm}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -11,6 +11,7 @@ import { setToken } from "@/services/auth/authSlice"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { NavLink, useNavigate } from "react-router"
+import GoogleAuthButton from "./GoogleAuthButton"
 
 const LoginContainer = () => {
   const navigate = useNavigate()
@@ -84,10 +85,17 @@ const LoginContainer = () => {
               </Button>
             </div>
           </form>
+          <div className="text-center">
+            <NavLink
+              to={AppPath.forgotPassword}
+              replace
+              className="text-blue-900 text-sm"
+            >
+              Forgot password
+            </NavLink>
+          </div>
           <div className="flex justify-center items-center mt-4">
-            <Button variant="outline" className="px-6 w-full">
-              Login with Google
-            </Button>
+            <GoogleAuthButton title="Login with Google" />
           </div>
           <div className="flex justify-between items-center">
             <hr className="h-[1px] bg-black w-[40%]"></hr>

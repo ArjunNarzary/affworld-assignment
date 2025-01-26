@@ -2,6 +2,9 @@ import {
   useRegisterUserMutation,
   useLogoutUserMutation,
   useLoginUserMutation,
+  useForgetPasswordMutation,
+  useResetPasswordMutation,
+  useGoogleLoginMutation,
 } from "./auth/authService"
 
 import {
@@ -17,6 +20,9 @@ export {
   useRegisterUserMutation,
   useLogoutUserMutation,
   useLoginUserMutation,
+  useForgetPasswordMutation,
+  useResetPasswordMutation,
+  useGoogleLoginMutation,
   useAddTaskMutation,
   useGetAllTaskQuery,
   useUpdateTaskMutation,

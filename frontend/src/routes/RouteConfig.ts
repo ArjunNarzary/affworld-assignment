@@ -1,7 +1,9 @@
 import {
   FeedContainer,
+  ForgotPasswordContainer,
   LoginContainer,
   RegisterContainer,
+  ResetPasswordContainer,
   TaskContainer,
 } from "@/containers"
 import { AppPath } from "./RouteName"
@@ -14,6 +16,10 @@ export interface IRouteConfig {
 const PrivateRoutes: IRouteConfig[] = [
   {
     path: AppPath.tasks,
+    component: TaskContainer,
+  },
+  {
+    path: AppPath.base,
     component: TaskContainer,
   },
   {
@@ -30,6 +36,14 @@ const PublicRoutes: IRouteConfig[] = [
   {
     path: AppPath.register,
     component: RegisterContainer,
+  },
+  {
+    path: AppPath.forgotPassword,
+    component: ForgotPasswordContainer,
+  },
+  {
+    path: AppPath.resetPassword,
+    component: ResetPasswordContainer,
   },
 ]
 

@@ -1,23 +1,21 @@
-import { useState } from "react"
+import { AlertDialogBox, InputForm } from "@/components"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { registerFormFields } from "@/constants"
-import { AppPath } from "@/routes"
-import { NavLink, useNavigate } from "react-router"
-import { InputForm } from "@/components"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { resetPasswordFormFields } from "@/constants"
 import { toast } from "@/hooks/use-toast"
-import { isEmail } from "@/lib/utils"
-import { useRegisterUserMutation } from "@/services"
 import { APIError } from "@/interfaces"
-import { useDispatch } from "react-redux"
-import { setToken } from "@/services/auth/authSlice"
-import GoogleAuthButton from "./GoogleAuthButton"
+import { AppPath } from "@/routes"
+import { useResetPasswordMutation } from "@/services"
+import { useState } from "react"
+import { useNavigate, useSearchParams } from "react-router"
 
-const RegisterContainer = () => {
+const ResetPasswordContainer = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const [registerUser, { isLoading }] = useRegisterUserMutation()
-  const [formFields, setFormFields] = useState(registerFormFields)
+  const [searchPrams] = useSearchParams()
+  const token = searchPrams.get("token")
+  const [resetPassword, { isLoading }] = useResetPasswordMutation()
+  const [formFields, setFormFields] = useState(resetPasswordFormFields)
+  const [showAlert, setShowAlert] = useState(false)
 
   const isValidData = () => {
     let isValid = true
@@ -25,10 +23,6 @@ const RegisterContainer = () => {
       if (field.required && !field.value.trim()) {
         field.error = true
         field.errorMessage = "This field is required"
-        isValid = false
-      } else if (field.id === "email" && !isEmail(field.value)) {
-        field.error = true
-        field.errorMessage = "Provide a valid email address"
         isValid = false
       } else if (field.id === "password" && field.value.length < 8) {
         field.error = true
@@ -69,23 +63,21 @@ const RegisterContainer = () => {
     return isValid
   }
 
-  const handleRegister = async (e: React.FormEvent) => {
+  const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault()
     const isDataValid = isValidData()
     const isPasswordValid = validatePasswordMatch()
     if (!isDataValid || !isPasswordValid) return
     const payload = {
-      name: formFields.find((field) => field.id === "name")?.value || "",
-      email: formFields.find((field) => field.id === "email")?.value || "",
       password:
         formFields.find((field) => field.id === "password")?.value || "",
+      token: token as string,
     }
 
     try {
-      const response = await registerUser(payload).unwrap()
+      const response = await resetPassword(payload).unwrap()
       if (response.success) {
-        dispatch(setToken(response))
-        navigate(AppPath.tasks)
+        setShowAlert(true)
       }
     } catch (error: unknown) {
       const apiError = error as APIError
@@ -98,10 +90,18 @@ const RegisterContainer = () => {
   }
 
   return (
-    <section className="flex justify-center items-center h-[100vh] w-full">
-      <Card className="w-[400px]">
-        <CardHeader>
-          <CardTitle className="text-center text-2xl">Register</CardTitle>
+    <div className="flex justify-center items-center min-h-[100vh]">
+      <AlertDialogBox
+        open={showAlert}
+        onCancel={() => setShowAlert(false)}
+        onConfirm={() => navigate(AppPath.login, { replace: true })}
+        title="Success"
+        description="Password Reset Successfully"
+        showCancel={false}
+      />
+      <Card className="w-[30rem]">
+        <CardHeader className="text-center font-semibold">
+          Reset Password
         </CardHeader>
         <CardContent>
           <form className="flex flex-col gap-4">
@@ -110,31 +110,17 @@ const RegisterContainer = () => {
             ))}
             <div className="flex justify-center items-center">
               <Button
-                className="px-6 w-full"
-                onClick={handleRegister}
+                className="w-full bg-darkBlue mt-4 text-lightGrey"
+                onClick={handleResetPassword}
                 disabled={isLoading}
               >
-                Register
+                Submit
               </Button>
             </div>
           </form>
-          <div className="flex justify-center items-center mt-4">
-            <GoogleAuthButton title="Register with Google" />
-          </div>
-          <div className="flex justify-between items-center">
-            <hr className="h-[1px] bg-black w-[40%]"></hr>
-            or
-            <hr className="h-[1px] bg-black w-[40%]"></hr>
-          </div>
-          <div className="flex justify-center w-full items-center">
-            <NavLink className="text-blue-800" to={AppPath.login}>
-              Already have an account
-            </NavLink>
-          </div>
         </CardContent>
       </Card>
-    </section>
+    </div>
   )
 }
-
-export default RegisterContainer
+export default ResetPasswordContainer

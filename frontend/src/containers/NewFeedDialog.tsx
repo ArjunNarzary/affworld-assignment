@@ -59,6 +59,7 @@ const NewFeedDialog = () => {
         title: "Error",
         description: "Please select an image",
       })
+      return
     }
     const formData = new FormData()
     formData.append("image", selectedFile as File)
@@ -81,9 +82,10 @@ const NewFeedDialog = () => {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <Button
-        variant="secondary"
-        size="sm"
+        variant="outline"
+        size="lg"
         onClick={() => setIsDialogOpen(true)}
+        className="bg-redPurple text-lightGrey"
       >
         ＋ Add New Feed
       </Button>

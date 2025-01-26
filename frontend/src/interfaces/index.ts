@@ -99,3 +99,8 @@ export interface IGetFeedsPayload {
 export interface IFeedsResponse extends IDefaultResponse {
   feeds: IFeed[]
 }
+
+//Forget Password
+export interface IForgetPasswordResponse extends IDefaultResponse {
+  redirectUrl: string
+}

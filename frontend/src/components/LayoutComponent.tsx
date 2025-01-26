@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectUser } from "@/services/auth/authSlice"
 import { useLogoutUserMutation } from "@/services"
 import { getFirstTwoChars } from "@/lib/utils"
+import { apiSlice } from "@/services/apiSlice"
+import { googleLogout } from "@react-oauth/google"
 
 const LayoutComponent = ({ children }: { children: ReactNode }) => {
   const user = useSelector(selectUser)
@@ -22,6 +24,8 @@ const LayoutComponent = ({ children }: { children: ReactNode }) => {
   const handleLogout = async () => {
     await logoutUser()
     dispatch(logOut())
+    googleLogout()
+    dispatch(apiSlice.util.resetApiState())
     navigate(AppPath.login, { replace: true })
   }
 

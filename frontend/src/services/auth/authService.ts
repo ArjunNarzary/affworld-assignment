@@ -1,5 +1,6 @@
 import {
   IDefaultResponse,
+  IForgetPasswordResponse,
   ILoginPayload,
   ILoginResponse,
   IRegisterPayload,
@@ -31,6 +32,36 @@ export const authService = apiSlice.injectEndpoints({
         method: "PUT",
       }),
     }),
+
+    forgetPassword: builder.mutation<
+      IForgetPasswordResponse,
+      { email: string }
+    >({
+      query: (body: { email: string }) => ({
+        url: API_ENDPOINTS.auth.forgetPassword,
+        method: "POST",
+        body,
+      }),
+    }),
+
+    resetPassword: builder.mutation<
+      IDefaultResponse,
+      { password: string; token: string }
+    >({
+      query: (body: { password: string; token: string }) => ({
+        url: API_ENDPOINTS.auth.resetPassword,
+        method: "POST",
+        body,
+      }),
+    }),
+
+    googleLogin: builder.mutation<ILoginResponse, { code: string }>({
+      query: (body: { code: string }) => ({
+        url: API_ENDPOINTS.auth.googleLogin,
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 })
 
@@ -38,4 +69,7 @@ export const {
   useRegisterUserMutation,
   useLogoutUserMutation,
   useLoginUserMutation,
+  useForgetPasswordMutation,
+  useResetPasswordMutation,
+  useGoogleLoginMutation,
 } = authService

@@ -49,9 +49,10 @@ export default function NewTaskDialog() {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <Button
-        variant="secondary"
-        size="sm"
+        variant="outline"
+        size="lg"
         onClick={() => setIsDialogOpen(true)}
+        className="bg-redPurple text-lightGrey"
       >
         ＋ Add New Task
       </Button>

@@ -128,7 +128,7 @@ const TaskContainer = () => {
         open={showAlert}
         title="Are you sure?"
         onConfirm={handleDeleteConfirm}
-        description="This action cannot be undone!"
+        description="This action will permanently deleted the task."
       />
       <section className="mt-10 flex gap-6 lg:gap-12">
         <DndContext onDragEnd={handleDragEnd} sensors={sensors}>

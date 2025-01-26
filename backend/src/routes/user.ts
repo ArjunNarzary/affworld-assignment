@@ -1,6 +1,7 @@
 import express, { Router } from "express"
 import {
   forgotPassword,
+  googleLogin,
   loginUser,
   logoutUser,
   refreshToken,
@@ -10,6 +11,7 @@ import {
 import { isAuthenticatedUser, validateData } from "../middlewares"
 import {
   forgotPasswordSchema,
+  googleAuthSchema,
   resetPasswordSchema,
   userLoginSchema,
   userRegistrationSchema,
@@ -22,6 +24,7 @@ router
   .post(validateData(userRegistrationSchema), registerUser)
 
 router.route("/login").post(validateData(userLoginSchema), loginUser)
+router.route("/auth/google").post(validateData(googleAuthSchema), googleLogin)
 router
   .route("/forgot-password")
   .post(validateData(forgotPasswordSchema), forgotPassword)

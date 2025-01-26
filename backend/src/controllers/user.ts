@@ -9,6 +9,8 @@ import {
 import jwt from "jsonwebtoken"
 import { User } from "../models"
 import { ERROR_MESSAGE } from "../libs"
+import { OAuth2Client } from "google-auth-library"
+import { googleAuth2Client } from "../config/googleOAuth"
 
 const getCookieOptions: CookieOptions = {
   expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
@@ -168,6 +170,7 @@ export const resetPassword = async (req: Request, res: Response) => {
       password: hashPassword,
       name: user.name,
       email: user.email,
+      socialLogin: user.socialLogin,
     })
 
     if (!updatedUser) {
@@ -213,6 +216,57 @@ export const refreshToken = async (req: Request, res: Response) => {
       token: token,
     })
   } catch (error) {
+    res.status(500).json(ERROR_MESSAGE)
+  }
+}
+
+//Handle google login
+export const googleLogin = async (req: Request, res: Response) => {
+  try {
+    const { code } = req.body
+    const { tokens } = await googleAuth2Client.getToken(code)
+
+    const userInfo = await fetch(
+      "https://www.googleapis.com/oauth2/v3/userinfo",
+      {
+        headers: { Authorization: `Bearer ${tokens.access_token}` },
+      }
+    ).then((res) => res.json())
+    if (userInfo.email && userInfo.name) {
+      let user = await findByEmail(userInfo.email)
+      if (user) {
+        await updateUserById(user._id.toString(), {
+          ...user,
+          name: user.name ?? "",
+          socialLogin: true,
+        })
+      } else {
+        const payload = {
+          name: userInfo.name,
+          email: userInfo.email,
+          socialLogin: true,
+          password: "jdkagsjdgsaudtas78dtsa8d7ts232dsd",
+        }
+        user = await insertUser(payload)
+      }
+
+      if (user) {
+        //create session cookies
+        const token = generateToken(user, "15m")
+        user.password = ""
+        res.status(201).cookie("token", token, getCookieOptions).json({
+          success: true,
+          message: "Login successful",
+          user: user,
+          token: token,
+        })
+      }
+    } else {
+      res.status(500).json(ERROR_MESSAGE)
+      return
+    }
+  } catch (error) {
+    console.log(error)
     res.status(500).json(ERROR_MESSAGE)
   }
 }

@@ -82,3 +82,22 @@ export const COLUMNS: IColumnType[] = [
     status: "DONE",
   },
 ]
+
+export const resetPasswordFormFields: IFormField[] = [
+  {
+    id: "password",
+    label: "Password",
+    type: "password",
+    placeholder: "Enter your password",
+    value: "",
+    required: true,
+  },
+  {
+    id: "confirm_password",
+    label: "Confirm Password",
+    type: "password",
+    placeholder: "Re-enter your password",
+    value: "",
+    required: true,
+  },
+]
