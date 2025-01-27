@@ -20,8 +20,7 @@ import { User } from "../models"
 
 const router: Router = express.Router()
 router.route("/").get(async (req, res) => {
-  const users = await User.find()
-  res.status(200).json({ users })
+  res.status(200).send("Hello World")
 })
 router
   .route("/register")
