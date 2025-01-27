@@ -5,7 +5,13 @@ import { connectDatabase } from "./config/database"
 const port = process.env.PORT || 8000
 
 connectDatabase()
-
-app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`)
-})
+  .then(() => {
+    console.log("Connected to database")
+    app.listen(port, () => {
+      console.log(`[server]: Server is running at http://localhost:${port}`)
+    })
+  })
+  .catch((err) => {
+    console.log({ err })
+    process.exit(1)
+  })
