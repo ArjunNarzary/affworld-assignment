@@ -2,7 +2,7 @@ import "dotenv/config"
 import app from "./app"
 import { connectDatabase } from "./config/database"
 
-const port = process.env.PORT || 8000
+const port = process.env.PORT
 
 connectDatabase()
   .then(() => {
