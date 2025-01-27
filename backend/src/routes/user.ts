@@ -16,12 +16,12 @@ import {
   userLoginSchema,
   userRegistrationSchema,
 } from "../schemas"
-import { connectDatabase } from "../config/database"
+import { User } from "../models"
 
 const router: Router = express.Router()
-router.route("/").get((req, res) => {
-  connectDatabase()
-  res.send("User route")
+router.route("/").get(async (req, res) => {
+  const users = await User.find()
+  res.status(200).json({ users })
 })
 router
   .route("/register")
